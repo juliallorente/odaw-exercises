@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação dos Serviços do Cinema</title>
+</head>
+<body>
+
+<h2>Avaliação dos Serviços do Cinema</h2>
+
+<form action="/submit" method="post">
+    <label for="name">Nome:</label><br>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+
+    <!--formato data-->
+    <label for="date">Data da visita:</label><br>
+    <input type="date" id="date" name="date"><br><br>
+
+    <label for="movie">Filme assistido:</label><br>
+    <input type="text" id="movie" name="movie"><br><br>
+
+    <!--opçoes-->
+    <label>Avalie a qualidade do som:</label><br>
+    <input type="radio" id="som1" name="som" value="ruim">
+    <label for="som1">Ruim</label><br>
+    <input type="radio" id="som2" name="som" value="regular">
+    <label for="som2">Regular</label><br>
+    <input type="radio" id="som3" name="som" value="bom">
+    <label for="som3">Bom</label><br>
+    <input type="radio" id="som4" name="som" value="otimo">
+    <label for="som4">Ótimo</label><br><br>
+
+    <label>Avalie a qualidade da imagem:</label><br>
+    <input type="radio" id="imagem1" name="imagem" value="ruim">
+    <label for="imagem1">Ruim</label><br>
+    <input type="radio" id="imagem2" name="imagem" value="regular">
+    <label for="imagem2">Regular</label><br>
+    <input type="radio" id="imagem3" name="imagem" value="bom">
+    <label for="imagem3">Bom</label><br>
+    <input type="radio" id="imagem4" name="imagem" value="otimo">
+    <label for="imagem4">Ótimo</label><br><br>
+
+    <label>Avalie o atendimento dos funcionários:</label><br>
+    <input type="radio" id="atendimento1" name="atendimento" value="ruim">
+    <label for="atendimento1">Ruim</label><br>
+    <input type="radio" id="atendimento2" name="atendimento" value="regular">
+    <label for="atendimento2">Regular</label><br>
+    <input type="radio" id="atendimento3" name="atendimento" value="bom">
+    <label for="atendimento3">Bom</label><br>
+    <input type="radio" id="atendimento4" name="atendimento" value="otimo">
+    <label for="atendimento4">Ótimo</label><br><br>
+
+    <label>A sala estava limpa?</label><br>
+    <input type="radio" id="limpeza1" name="limpeza" value="sim">
+    <label for="limpeza1">Sim</label><br>
+    <input type="radio" id="limpeza2" name="limpeza" value="nao">
+    <label for="limpeza2">Não</label><br><br>
+
+    <label>Compraria ingresso novamente?</label><br>
+    <input type="radio" id="recompra1" name="recompra" value="sim">
+    <label for="recompra1">Sim</label><br>
+    <input type="radio" id="recompra2" name="recompra" value="nao">
+    <label for="recompra2">Não</label><br><br>
+
+    <!--caixa comentario grande-->
+    <label for="feedback">Feedback adicional:</label><br>
+    <textarea id="feedback" name="feedback" rows="4" cols="50"></textarea><br><br>
+
+    <input type="submit" value="Enviar Avaliação">
+</form>
+
+</body>
+</html>
