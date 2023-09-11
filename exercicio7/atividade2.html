@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário com Validação</title>
+    <script>
+        function TestaVal() {
+            const campos = ["campo1", "campo2", "campo3", "campo4"];
+
+            for (let i = 0; i < campos.length; i++) {
+                if (document.TesteSub[campos[i]].value == "") {
+                    alert("Campo " + (i + 1) + " não preenchido: form não foi submetido");
+                    return false;
+                }
+            }
+
+            alert("Form submetido");
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <form method="POST" name="TesteSub" onSubmit="return TestaVal()" action="teste.html">
+        <p>Nome: <input type="text" size="20" maxlength="50" name="campo1" placeholder="Ex: João Silva"></p>
+        <p>Matricula: <input type="text" size="20" maxlength="20" name="campo2" placeholder="1234567890"></p>
+        <p>Curso: <input type="text" size="20" maxlength="50" name="campo3" placeholder="Ex: Engenharia da Computação"></p>
+        <p>CPF: <input type="text" size="20" maxlength="11" name="campo4" placeholder="Ex: 12345678901"></p>
+        <p><input type="submit" value="Enviar"></p>
+    </form>
+</body>
+</html>

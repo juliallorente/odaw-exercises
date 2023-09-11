@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário com Checkbox</title>
+    <script>
+        function AltMaiusc() {
+            const textFields = document.querySelectorAll('input[type="text"]');
+            textFields.forEach(field => {
+                field.value = field.value.toUpperCase();
+            });
+        }
+
+        function AltMinusc() {
+            const textFields = document.querySelectorAll('input[type="text"]');
+            textFields.forEach(field => {
+                field.value = field.value.toLowerCase();
+            });
+        }
+
+        function handleCheckboxChange(checkbox) {
+            const otherCheckboxValue = checkbox.value === "1" ? "2" : "1";
+            const otherCheckbox = document.querySelector(`input[type="checkbox"][value="${otherCheckboxValue}"]`);
+            if (checkbox.checked) {
+                if (checkbox.value === "1") {
+                    AltMinusc();
+                } else if (checkbox.value === "2") {
+                    AltMaiusc();
+                }
+                otherCheckbox.checked = false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="TCheck"> 
+        <p>Texto 1: <input type="text" size="20" maxlength="20" name="text1"></p>
+        <p>Texto 2: <input type="text" size="20" maxlength="20" name="text2"></p>
+        <p>Texto 3: <input type="text" size="20" maxlength="20" name="text3"></p>
+        <p>
+            Minúsculo<input type="checkbox" value="1" onclick="handleCheckboxChange(this)">
+            Maiúsculo<input type="checkbox" value="2" onclick="handleCheckboxChange(this)">
+        </p>
+    </form>
+</body>
+</html>
