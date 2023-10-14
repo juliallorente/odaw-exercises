@@ -1,0 +1,15 @@
+    1-Definindo a Senha Original:
+    Primeiro, definimos uma senha de exemplo, "minhaSenha123", que representa a senha que um usuário escolheria ao se registrar em um site.
+
+    2-Cifrando a Senha:
+    Em seguida, usamos a função password_hash() para cifrar essa senha. Esta função transforma a senha original em uma string cifrada, que é muito difícil de decifrar. Esta string cifrada é o que geralmente armazenamos em um banco de dados, em vez da senha real, para segurança.
+
+    3-Exibindo a Senha Cifrada:
+    O código então imprime essa senha cifrada para que possamos ver como ela se parece.
+
+    4-Validando a Senha:
+    Depois, simulamos o processo de um usuário tentando fazer login. Usamos a mesma senha "minhaSenha123" como exemplo de uma senha inserida por um usuário. Para verificar se esta senha inserida é a mesma que a senha original (a que foi cifrada), usamos a função password_verify(). Esta função compara a senha inserida com a versão cifrada para ver se elas correspondem.
+
+    5-Resultado:
+    Finalmente, o código imprime "Senha correta!" se a senha inserida corresponder à senha original, e "Senha incorreta!" se não corresponder.
+
