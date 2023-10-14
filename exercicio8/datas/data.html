@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explorar Datas em JavaScript</title>
+</head>
+<body>
+
+    <h1>Exploração de Datas em JavaScript</h1>
+
+    <button onclick="exploreDates()">Clique para Explorar Datas</button>
+
+    <script>
+        function exploreDates() {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1; // JavaScript conta meses a partir de 0
+            const currentDay = currentDate.getDate();
+            const currentHours = currentDate.getHours();
+            const currentMinutes = currentDate.getMinutes();
+            const currentSeconds = currentDate.getSeconds();
+            
+            alert(`Data Atual: ${currentDate}
+Ano: ${currentYear}
+Mês: ${currentMonth}
+Dia: ${currentDay}
+Hora: ${currentHours}
+Minutos: ${currentMinutes}
+Segundos: ${currentSeconds}`);
+        }
+    </script>
+
+</body>
+</html>

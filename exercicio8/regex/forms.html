@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação dos Serviços do Cinema</title>
+    <style>
+        body {
+            background-color: #FFE4F1;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            color: #444;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e73cb4;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFF;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #E74C3C;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #C0392B;
+        }
+    </style>
+
+    <script>
+        function validateForm() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var date = document.getElementById("date").value;
+            var movie = document.getElementById("movie").value;
+            var som = document.getElementsByName("som");
+            var imagem = document.getElementsByName("imagem");
+            var atendimento = document.getElementsByName("atendimento");
+            var limpeza = document.getElementsByName("limpeza");
+            var recompra = document.getElementsByName("recompra");
+
+            // Validar se os campos estão vazios
+            if (name === "" || email === "" || date === "" || movie === "") {
+                alert("Por favor, preencha todos os campos.");
+                return false;
+            }
+
+            // Validar data
+            var currentDate = new Date();
+            var inputDate = new Date(date);
+            if (inputDate > currentDate) {
+                alert("Por favor, insira uma data válida.");
+                return false;
+            }
+
+            // Validação de E-mail com regex
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                alert("Por favor, insira um endereço de e-mail válido.");
+                return false;
+            }
+
+            // Validação de CPF com regex
+            const cpfPattern = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+            const cpf = document.getElementById("cpf").value;
+            if (!cpfPattern.test(cpf)) {
+                alert("Por favor, insira um CPF válido.");
+                return false;
+            }
+
+            // Validação de radio buttons
+            function isRadioChecked(radioArr) {
+                for (var i = 0; i < radioArr.length; i++) {
+                    if (radioArr[i].checked) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            if (!isRadioChecked(som) || !isRadioChecked(imagem) || !isRadioChecked(atendimento) || !isRadioChecked(limpeza) || !isRadioChecked(recompra)) {
+                alert("Por favor, responda todas as perguntas de avaliação.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Avaliação dos Serviços do Cinema</h2>
+    <form action="/submit" method="post" onsubmit="return validateForm();">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name">
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+
+        <label for="date">Data da visita:</label>
+        <input type="date" id="date" name="date">
+
+        <label for="movie">Filme assistido:</label>
+        <input type="text" id="movie" name="movie">
+
+        <!-- Avaliações -->
+        <fieldset style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+            <legend>Avalie a qualidade do som:</legend>
+            <input type="radio" id="som1" name="som" value="ruim">
+            <label for="som1">Ruim</label><br>
+            <input type="radio" id="som2" name="som" value="regular">
+            <label for="som2">Regular</label><br>
+            <input type="radio" id="som3" name="som" value="bom">
+            <label for="som3">Bom</label><br>
+            <input type="radio" id="som4" name="som" value="otimo">
+            <label for="som4">Ótimo</label>
+        </fieldset>
+
+        <fieldset style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+            <legend>Avalie a qualidade da imagem:</legend>
+            <input type="radio" id="imagem1" name="imagem" value="ruim">
+            <label for="imagem1">Ruim</label><br>
+            <input type="radio" id="imagem2" name="imagem" value="regular">
+            <label for="imagem2">Regular</label><br>
+            <input type="radio" id="imagem3" name="imagem" value="bom">
+            <label for="imagem3">Bom</label><br>
+            <input type="radio" id="imagem4" name="imagem" value="otimo">
+            <label for="imagem4">Ótimo</label>
+        </fieldset>
+
+        <fieldset style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+            <legend>Avalie o atendimento dos funcionários:</legend>
+            <input type="radio" id="atendimento1" name="atendimento" value="ruim">
+            <label for="atendimento1">Ruim</label><br>
+            <input type="radio" id="atendimento2" name="atendimento" value="regular">
+            <label for="atendimento2">Regular</label><br>
+            <input type="radio" id="atendimento3" name="atendimento" value="bom">
+            <label for="atendimento3">Bom</label><br>
+            <input type="radio" id="atendimento4" name="atendimento" value="otimo">
+            <label for="atendimento4">Ótimo</label>
+        </fieldset>
+
+        <fieldset style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+            <legend>A sala estava limpa?</legend>
+            <input type="radio" id="limpeza1" name="limpeza" value="sim">
+            <label for="limpeza1">Sim</label><br>
+            <input type="radio" id="limpeza2" name="limpeza" value="nao">
+            <label for="limpeza2">Não</label>
+        </fieldset>
+
+        <fieldset style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+            <legend>Compraria ingresso novamente?</legend>
+            <input type="radio" id="recompra1" name="recompra" value="sim">
+            <label for="recompra1">Sim</label><br>
+            <input type="radio" id="recompra2" name="recompra" value="nao">
+            <label for="recompra2">Não</label>
+        </fieldset>
+
+        <label for="feedback">Feedback adicional:</label>
+        <textarea id="feedback" name="feedback" rows="4"></textarea>
+
+        <input type="submit" value="Enviar Avaliação">
+
+    </form>
+</body>
+
+</html>

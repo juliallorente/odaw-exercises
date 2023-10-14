@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerenciamento de Janelas</title>
+</head>
+<body>
+
+<h1>Troca de Páginas com JavaScript</h1>
+
+<button id="newWindowBtn">Redirecionar Para o Google</button>
+<button onclick="redirectPage()">Página</button>
+<a id="hiddenLink" href="https://www.google.com" target="_blank" style="display:none;"></a>
+
+<script>
+    document.getElementById("newWindowBtn").addEventListener("click", function() {
+        var hiddenLink = document.getElementById("hiddenLink");
+        hiddenLink.click();
+    });
+
+    function redirectPage() {
+        window.location.href = "novaPagina.html";    }
+</script>
+
+</body>
+</html>

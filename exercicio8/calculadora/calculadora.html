@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Avançada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+        }
+
+        .calculator {
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f2a6db;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator input, .calculator button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .operations {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .operations button {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <input type="number" id="number1" placeholder="Digite o primeiro número">
+        <input type="number" id="number2" placeholder="Digite o segundo número">
+
+        <div class="operations">
+            <button onclick="calculate('+')">Somar</button>
+            <button onclick="calculate('-')">Subtrair</button>
+            <button onclick="calculate('*')">Multiplicar</button>
+            <button onclick="calculate('/')">Dividir</button>
+            <button onclick="calculate('^')">Potência</button>
+            <button onclick="calculate('sqrt')">Raiz Quadrada</button>
+            <button onclick="calculate('%')">Módulo</button>
+        </div>
+
+        <input type="text" id="result" placeholder="Resultado" readonly>
+    </div>
+
+    <script>
+        function calculate(operator) {
+            const number1 = parseFloat(document.getElementById('number1').value);
+            const number2 = parseFloat(document.getElementById('number2').value);
+            let result;
+
+            switch (operator) {
+                case '+':
+                    result = number1 + number2;
+                    break;
+                case '-':
+                    result = number1 - number2;
+                    break;
+                case '*':
+                    result = number1 * number2;
+                    break;
+                case '/':
+                    if (number2 === 0) {
+                        alert("Não é possível dividir por zero!");
+                        return;
+                    }
+                    result = number1 / number2;
+                    break;
+                case '^':
+                    result = Math.pow(number1, number2);
+                    break;
+                case 'sqrt':
+                    if (number1 < 0) {
+                        alert("Não é possível calcular a raiz quadrada de um número negativo!");
+                        return;
+                    }
+                    result = Math.sqrt(number1);
+                    break;
+                case '%':
+                    if (number2 === 0) {
+                        alert("Não é possível encontrar o módulo com divisor zero!");
+                        return;
+                    }
+                    result = number1 % number2;
+                    break;
+            }
+
+            document.getElementById('result').value = result;
+        }
+    </script>
+</body>
+
+</html>
