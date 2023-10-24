@@ -1,0 +1,37 @@
+CREATE DATABASE biblioteca;
+
+USE biblioteca;
+
+CREATE TABLE livros (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Titulo VARCHAR(255) NOT NULL,
+    Autor VARCHAR(255),
+    Genero VARCHAR(100),
+    AnoPublicacao YEAR,
+    ISBN VARCHAR(13),
+    Preco DECIMAL(10, 2)
+);
+
+ALTER TABLE livros MODIFY AnoPublicacao SMALLINT;
+
+INSERT INTO livros (Titulo, Autor, Genero, AnoPublicacao, ISBN, Preco) 
+VALUES 
+("O Grande Gatsby", "F. Scott Fitzgerald", "Romance", 1925, "1234567890123", 19.99),
+("Moby Dick", "Herman Melville", "Ficção", 1851, "2345678901234", 14.99),
+("Orgulho e Preconceito", "Jane Austen", "Romance", 1813, "3456789012345", 16.99);
+
+UPDATE livros SET  Preco = 24.99 WHERE ID = 10;
+UPDATE livros
+SET Preco = Preco * 1.10
+WHERE Genero = "Romance";
+
+SELECT * FROM livros;
+SELECT Titulo, Autor FROM livros;
+
+DELETE FROM livros WHERE ID = 10;
+
+DROP TABLE livros;
+
+DROP DATABASE biblioteca;
+
+
