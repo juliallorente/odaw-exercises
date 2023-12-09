@@ -1,0 +1,94 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const filterOptions = document.querySelectorAll('.filter-option');
+  
+      filterOptions.forEach(option => {
+          option.addEventListener('click', function (e) {
+              e.preventDefault();
+              console.log("Filtro clicado:", this.getAttribute('data-filter')); // Para depuração
+              const filter = this.getAttribute('data-filter');
+  
+              const cards = document.querySelectorAll('.card');
+              cards.forEach(card => {
+                  if (filter === 'roles') {
+                      card.style.display = '';
+                  } else if (card.getAttribute('data-' + filter) === 'true') {
+                      card.style.display = '';
+                  } else {
+                      card.style.display = 'none';
+                  }
+              });
+          });
+      });
+    });    
+  
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchInput = document.getElementById('search-input');
+      
+      searchInput.addEventListener('input', function () {
+          const searchText = this.value.toLowerCase();
+          const cards = document.querySelectorAll('.card');
+    
+          cards.forEach(card => {
+              const title = card.querySelector('.card-title').textContent.toLowerCase();
+              if (title.includes(searchText)) {
+                  card.style.display = '';
+              } else {
+                  card.style.display = 'none';
+              }
+          });
+      });
+    });
+  
+  
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchInput = document.getElementById('search-input');
+      const searchButton = document.getElementById('search-button');
+    
+      const filterCards = () => {
+          const searchText = searchInput.value.toLowerCase();
+          const cards = document.querySelectorAll('.card');
+    
+          cards.forEach(card => {
+              const title = card.querySelector('.card-title').textContent.toLowerCase();
+              if (title.includes(searchText)) {
+                  card.style.display = '';
+              } else {
+                  card.style.display = 'none';
+              }
+          });
+      };
+  
+    searchInput.addEventListener('input', filterCards);
+    searchButton.addEventListener('click', function(e) {
+        e.preventDefault(); // Previne o comportamento padrão do botão de submit
+        filterCards();
+      });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+      const filterOptions = document.querySelectorAll('.filter-option');
+      const rolesContainer = document.querySelector('.principal-containt[data-tipo="role"]');
+      const usuariosContainer = document.querySelector('.principal-containt[data-tipo="usuario"]');
+  
+      // Exibir apenas roles no início
+      rolesContainer.style.display = 'block';
+      usuariosContainer.style.display = 'none';
+  
+      filterOptions.forEach(option => {
+          option.addEventListener('click', function (e) {
+              e.preventDefault();
+              const filter = this.getAttribute('data-filter');
+  
+              if (filter === 'usuario') {
+                  // Exibir usuários e ocultar roles
+                  rolesContainer.style.display = 'none';
+                  usuariosContainer.style.display = 'block';
+              } else {
+                  // Exibir roles e ocultar usuários
+                  rolesContainer.style.display = 'block';
+                  usuariosContainer.style.display = 'none';
+              }
+          });
+        });
+      });
+  </script>

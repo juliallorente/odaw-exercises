@@ -1,0 +1,22 @@
+    <!-- Conteudo Principal Usuario-->
+    <div class="principal-containt">
+        <div class="container text-center">
+            <div class="row">
+              {% for usuario in users %}
+                <div class="col" data-tipo="usuario">
+                    <div class="card" style="width: 20rem;"data-usuario="{{ usuario.id }}">
+                        <img src="{{ usuario.imagem_url }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ usuario.nome }}</h5>
+                            <p class="card-text">{{ usuario.email }}</p>
+                            <!-- Adicione outros campos conforme necessário -->
+                        </div>
+                        <div class="card-footer">
+                          <button type="button" class="btn btn-light  btn-sm">Seguir amigo</button>
+                        </div>
+                    </div>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+    </div> 

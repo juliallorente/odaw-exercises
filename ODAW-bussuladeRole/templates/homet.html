@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Utilização do Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"/>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="static/css/style-home.css">
+    <title>Bussola de Rolê</title>
+  </head>
+
+  <body  class="mt-1" style="background-color: #f5eff7;">
+    <!-- barra menu: colocar uma fotinho de usuario ao inves de 3 barrinhas --> 
+    <nav class="navbar fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="static/imagens/logo-odaw.png" alt="Logo Bússola de Rolê">
+            </a>
+    
+            <!-- Menu Items -->
+            <ul class="navbar-nav">
+                <li class="nav-item"><a href="home.html">Home</a></li>
+                <!-- Outros itens do menu aqui -->
+            </ul>
+    
+            <!-- Search Form -->
+            <form class="search-form">
+                <input type="search" placeholder="Pesquisar">
+                <button type="submit">Pesquisar</button>
+            </form>
+    
+            <!-- Offcanvas Menu para dispositivos móveis -->
+            <!-- Estrutura do offcanvas aqui -->
+        </div>
+    </nav>
+    
+    <!-- Arquivos Modais -->
+    <!-- Estrutura dos modais aqui -->
+    
+    <!-- Arquivos CSS e JS externos -->
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    
+    <!-- Conteudo Principal Rolês-->
+    <div class="principal-containt" data-tipo="role">
+      <div class="container text-center">
+          <div class="row">
+            {% for role in roles %}
+              <div class="col">
+                  <div class="card" style="width: 20rem;" data-promocao="{% if role.promocao %}true{% else %}false{% endif %}"
+                  data-happy-hour="{% if role.happy_hour %}true{% else %}false{% endif %}"
+                  data-tipo-musica="{% if role.tipo_musica %}true{% else %}false{% endif %}">
+                      <img src="{{ role.imagem_url }}" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <div class="accordion-item" style="text-align: center;">
+                          <h2 class="accordion-header" style="text-align: center;">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ role._id }}" aria-expanded="true" aria-controls="collapse{{ role._id }}">
+                              <h5 class="card-title" style="text-align: center;">{{ role.nome }}</h5>
+                            </button>
+                          </h2>
+                          <div id="collapse{{ role._id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ role._id }}" data-bs-parent=".principal-containt">
+                            <div class="accordion-body">{{ role.descricao }}</div>
+                          </div>
+                        </div>                        
+                          <!-- Adicione outros campos conforme necessário -->
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        {% if role.happy_hour %}
+                          <button class="list-group-item" data-label="happy_hour">{{ role.happy_hour }}</button>
+                        {% endif %}
+                        {% if role.promocao %}
+                          <li class="list-group-item" data-label="promocao">{{ role.promocao }}</li>
+                        {% endif %}
+                        {% if role.tipo_musica %}
+                          <li class="list-group-item" data-label="tipo_musica">{{ role.tipo_musica }}</li>
+                        {% endif %}
+                        {% if role.confirmados %}
+                        <button type="button" class="btn btn-light  btn-sm" data-bs-toggle="popover" data-bs-title="Lista de confirmados" data-bs-content="{{ role.confirmados }}">Confirmados</button>
+                        {% endif %}
+                      </ul>
+                      <div class="card-footer" >
+                        {% set is_confirmed = user_name in role.confirmados %}
+                        <a class="btn btn-light  btn-sm confirm-presence-button" data-role-id="{{ role._id }}"  data-confirmed="{{ 'true' if is_confirmed else 'false' }}">{{ "Desconfirmar Presença" if is_confirmed else "Confirmar Presença" }}</a>
+                        <button type="button" class="btn btn-light  btn-sm">Convidar Amigos</button>
+                        
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div> 
+    <!-- Conteudo Principal Usuario-->
+    <div class="principal-containt" data-tipo="usuario">
+      <div class="container text-center">
+          <div class="row">
+            {% for usuario in users %}
+              <div class="col">
+                  <div class="card" style="width: 20rem;"data-usuario="{{ usuario.id }}">
+                      <img src="{{ usuario.imagem_url }}" class="card-img-top" alt="...">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ usuario.nome }}</h5>
+                          <p class="card-text">{{ usuario.email }}</p>
+                          <!-- Adicione outros campos conforme necessário -->
+                      </div>
+                      <div class="card-footer">
+                        <a class="btn btn-light  btn-sm follow-button" data-user-id="{{ usuario._id }}"  data-confirmed="{{ 'true' if is_confirmed else 'false' }}">{{ "Deixar de Seguir" if is_confirmed else "Seguir" }}</a>
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div> 
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search-input');
+        
+        searchInput.addEventListener('input', function () {
+            const searchText = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+      
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(searchText)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+      });
+    
+    
+      document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+      
+        const filterCards = () => {
+            const searchText = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+      
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(searchText)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        };
+    
+      searchInput.addEventListener('input', filterCards);
+      searchButton.addEventListener('click', function(e) {
+          e.preventDefault(); // Previne o comportamento padrão do botão de submit
+          filterCards();
+        });
+      });
+    </script>
+
+    <script src="static/js/home.js"></script>
+  </body>
+</html>
+

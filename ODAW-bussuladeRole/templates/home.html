@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Utilização do Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"/>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="static/css/style-home.css">
+    <title>Bussola de Rolê</title>
+  </head>
+
+  <body  class="mt-1" style="background-color: #f5eff7;">
+    <!-- barra menu: colocar uma fotinho de usuario ao inves de 3 barrinhas --> 
+    <nav class="navbar fixed-top" style="background-color: #bd7bcb;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" ><img src="static/imagens/logo-odaw.png" width="175px" alt="Logo Bússola de Rolê"></a>
+          <nav class="navbar navbar-expand-lg " style="background-color: #bd7bcb;">
+            <div class="container-fluid">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: #bd7bcb;">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #bd7bcb;">
+                      Filtrar
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a id="filtro-todos" class="dropdown-item filter-option" href="#" data-filter="roles">Roles</a></li>
+                      <li><a id="filtro-promocao" class="dropdown-item filter-option filter-promocao" href="#" data-filter="promocao">Promoção</a></li>
+                      <li><a id="filtro-happy-hour" class="dropdown-item filter-option filter-happy-hour" href="#" data-filter="happy-hour">Happy Hour</a></li>
+                      <li><a id="filtro-musica" class="dropdown-item filter-option filter-tipo-musica" href="#" data-filter="tipo-musica">Tipo de Música</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a id="filtro-usuario" class="dropdown-item filter-option" href="#" data-filter="usuario">Usuarios</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <form class="d-flex" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" id="search-input">
+                  <button class="btn btn-light" type="submit" id="search-button">Pesquisar</button>
+                </form>
+              </div>
+            </div>
+          </nav>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Olá, {{user_info["nome"] }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body" >
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"   href="javascript:void(0);" onclick="abrirModal('perfilModal')">Perfil</a>
+                    <!-- Modal do Perfil -->
+                    <div id="perfilModal" class="modalperfil">
+                      <div class="container-fluid modal-content-perfil">
+                        <span class="closeperfil" onclick="fecharModal('perfilModal')">&times;</span>
+                        <div class="row"> 
+                          <h3>Perfil do Usuário</h3>
+                          <div class="col" id="infoUsuario"> 
+                            <p>Nome: {{ user_info['nome'] }}</p>
+                            <p>Email: {{ user_info['email'] }}</p>
+                            <p>Seguidores: {{ user_info['seguidores'] }}</p>
+                            <!-- Outras informações do usuário -->
+                            <button class="btn btn-light  btn-sm" onclick="editarPerfil()">Editar Perfil</button>
+                          </div>
+                          <!-- Formulário de Edição de Perfil (inicialmente oculto) -->
+                          <div id="formEditarPerfil" class="col" style="display: none;">
+                            <input type="text" id="nomeUsuario" placeholder="Nome" value="{{ user_info['nome'] }}">
+                            <input type="email" id="emailUsuario" placeholder="Email" value="{{ user_info['email'] }}">
+                            <!-- Outros campos para edição -->
+                            <button class="btn btn-light btn-sm" onclick="salvarAlteracoes()">Salvar Alterações</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                </li>
+                <li class="nav-item ">
+                  
+                  <a class="nav-link" href="javascript:void(0);" onclick="abrirModal('termosUsoModal')">Termos de Uso</a>
+                  <div id="termosUsoModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="fecharModal('termosUsoModal')">&times;</span>
+                        <h2>Termos de Uso</h2>
+                        <p>Somos uma plataforma que deseja proporcionar a você, usuário, momentos de alegria, diversão e lazer em diversos estabelecimentos. O serviço da plataforma Bussula de Role consiste em conectar, através do aplicativo, as pessoas (usuários) aos estabelecimentos cadastrados, por meio da visualização online das ofertas e/ou opções diferenciadas de entretenimento/atendimento do estabelecimento para um determinado dia.</p>
+                        <p>Você deve cumprir com suas responsabilidades definidas nestes Termos e em eventuais termos adicionais.
+
+                          Essas são algumas dessas responsabilidades:
+                          
+                          Você deve ter pelo menos 18 (dezoito) anos de idade para concordar e aceitar os Termos de Uso. Se você for menor de 18 anos, só poderá usar um Site ou Serviço na presença e com a aprovação de um dos pais ou responsável legal;
+                          Todas as comunicações do Favorito diretamente com você serão feitas através das informações fornecidas no cadastro, por isso é muito importante que você forneça os dados corretos e os mantenha atualizados;
+                          Manter seus dados seguros é muito importante para nós, mas para isso precisamos de sua colaboração: crie uma senha forte (com maiúsculas, minúsculas, números e caracteres especiais). Além disso, você deve mudá-la periodicamente e não compartilhá-la com ninguém;
+                          Qualquer violação ao disposto nos Termos de Uso garantirá ao Favorito o direito de adotar as medidas que julgar necessárias, podendo vedar o acesso do usuário;
+                          Você não pode tentar ou incentivar terceiros a driblar, reverter à engenharia, decodificar, decompilar, desmontar ou fraudar ou interferir de qualquer forma com aspectos da Plataforma.</p>
+                        <p>A Bussula de Role reserva o direito de alterar os Termos de Uso aqui estipuladas a seu critério, podendo alterar, adicionar, modificar ou remover partes.
+                          É obrigação do usuário, periodicamente, inteirar-se dos Termos de Uso e da Política de Privacidade, a fim de acompanhar e opinar acerca das modificações. A continuação do uso de sua conta na Plataforma constituirá a sua aceitação às alterações e aos novos Termos de Uso.</p>
+                        <p>As leis do Brasil vão reger todas as disputas que surgirem com relação a qualquer um destes Termos, de termos adicionais ou qualquer serviço relacionado, mesmo se houver conflito nas regras das leis. Essas disputas serão resolvidas exclusivamente na Justiça Federal ou Estadual de Criciúma, Santa Catarina, Brasil.                        </p>
+                        </div>
+                  </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0);" onclick="abrirModal('politicaPrivacidadeModal')">Política de privacidade</a>
+                    <div id="politicaPrivacidadeModal" class="modal">
+                      <div class="modal-content">
+                          <span class="close" onclick="fecharModal('politicaPrivacidadeModal')">&times;</span>
+                          <h2>Política de Privacidade</h2>
+                          <p>O aplicativo Bússola de Rolê foi desenvolvido pelas estudantes Julia e Nicole como um serviço gratuito. Este serviço é oferecido por Julia e Nicole sem nenhum custo e deve ser utilizado no estado em que se encontra. Esta página tem o propósito de informar os visitantes sobre as políticas de coleta, uso e divulgação de Informações Pessoais, caso decidam utilizar nosso Serviço. Ao optar por usar nosso Serviço, você concorda com a coleta e uso de informações de acordo com esta política. As informações pessoais que coletamos são utilizadas com o intuito de fornecer e aprimorar o serviço. Não iremos utilizar nem compartilhar suas informações com terceiros, exceto conforme descrito nesta Política de Privacidade. Os termos utilizados nesta Política de Privacidade têm os mesmos significados que em nossos Termos e Condições, os quais podem ser acessados no Bússola de Rolê, a menos que definido de outra forma nesta Política de Privacidade.</p>
+                          <p>Cookies são arquivos com uma pequena quantidade de dados que são comumente usados como identificadores exclusivos anônimos. Eles são enviados para o seu navegador a partir dos sites que você visita e são armazenados na memória interna do seu dispositivo. Este Serviço não usa esses “cookies” explicitamente. No entanto, o aplicativo pode usar código de terceiros e bibliotecas que usam “cookies” para coletar informações e melhorar seus serviços. Você tem a opção de aceitar ou recusar esses cookies e saber quando um cookie está sendo enviado para o seu dispositivo. Se você optar por recusar nossos cookies, pode não ser capaz de usar algumas partes deste Serviço.</p>
+                          <p>Valorizamos sua confiança em nos fornecer suas informações pessoais, portanto, estamos nos esforçando para usar meios comercialmente aceitáveis de protegê-las. Mas lembre-se que nenhum método de transmissão pela internet, ou método de armazenamento eletrônico é 100% seguro e confiável, e não podemos garantir sua segurança absoluta.</p>
+                          <p>Este serviço pode conter links para outros sites. Se você clicar em um link de terceiros, será direcionado a esse site. Observe que esses sites externos não são operados por nós. Portanto, recomendamos enfaticamente que você analise a Política de Privacidade desses sites. Não temos controle e não assumimos responsabilidade pelo conteúdo, políticas de privacidade ou práticas de quaisquer sites ou serviços de terceiros.</p>
+                          <!-- Conteúdo do seu modal vai aqui -->
+                      </div>
+                  </div>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0);" onclick="abrirModal('criarRoleModal')">Criar um rolê</a>
+                    <!-- Modal para Criar um Rolê -->
+                    <div id="criarRoleModal" class="modalrole">
+                      <div class="modal-content-role">
+                        <span class="closerole" onclick="fecharModal('criarRoleModal')">&times;</span>
+                        <h2>Criar um Rolê</h2>
+                        <form id="formCriarRole" action="/add-role">
+                          <label for="nome">Nome do Rolê:</label>
+                          <input type="text" id="nome" name="nome" required><br><br>
+                          <label for="promocao">Promocao:</label>
+                          <input type="text" id="promocao" name="promocao"><br><br>
+                          <label for="happy_hour">Happy Hour:</label>
+                          <input type="text" id="happy_hour" name="happy_hour"><br><br>
+                          <label for="tipo_musica">Tipo de música:</label>
+                          <input type="text" id="tipo_musica" name="tipo_musica"><br><br>
+                          <label for="imagem_url">Adicione uma imagem ao seu Rolê:</label>
+                          <input type="file" id="imagem_url" name="imagem_url" accept="image/*"><br><br>
+                          <button class="btn btn-light  btn-sm" type="submit" >Criar Rolê</button>
+                        </form>
+                      </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"href="javascript:void(0);" onclick="carregarRolesConfirmados(); abrirModal('rolesConfirmadosModal');">Rolês Confirmados</a>
+                    <!-- Modal para Rolês Confirmados -->
+                    <div id="rolesConfirmadosModal" class="modalRoleConfirmado">
+                      <div class="modal-content-roleConfirmado">
+                        <span class="closeRoleConfirmado" onclick="fecharModal('rolesConfirmadosModal')">&times;</span>
+                        <h2>Rolês Confirmados</h2>
+                        <ul id="listaRolesConfirmados">
+                          <!-- Os itens da lista serão inseridos aqui dinamicamente -->
+                        </ul>
+                      </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <!--aqui acaba o div principal-->
+        </div>
+      </nav>
+    <!-- Conteudo Principal Rolês-->
+    <div class="principal-containt" data-tipo="role">
+      <div class="container text-center">
+          <div class="row">
+            {% for role in roles %}
+              <div class="col">
+                  <div class="card" style="width: 20rem;" data-promocao="{% if role.promocao %}true{% else %}false{% endif %}"
+                  data-happy-hour="{% if role.happy_hour %}true{% else %}false{% endif %}"
+                  data-tipo-musica="{% if role.tipo_musica %}true{% else %}false{% endif %}">
+                      <img src="{{ role.imagem_url }}" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <div class="accordion-item" style="text-align: center;">
+                          <h2 class="accordion-header" style="text-align: center;">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ role._id }}" aria-expanded="true" aria-controls="collapse{{ role._id }}">
+                              <h5 class="card-title" style="text-align: center;">{{ role.nome }}</h5>
+                            </button>
+                          </h2>
+                          <div id="collapse{{ role._id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ role._id }}" data-bs-parent=".principal-containt">
+                            <div class="accordion-body">{{ role.descricao }}</div>
+                          </div>
+                        </div>                        
+                          <!-- Adicione outros campos conforme necessário -->
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        {% if role.happy_hour %}
+                          <button class="list-group-item" data-label="happy_hour">{{ role.happy_hour }}</button>
+                        {% endif %}
+                        {% if role.promocao %}
+                          <li class="list-group-item" data-label="promocao">{{ role.promocao }}</li>
+                        {% endif %}
+                        {% if role.tipo_musica %}
+                          <li class="list-group-item" data-label="tipo_musica">{{ role.tipo_musica }}</li>
+                        {% endif %}
+                        {% if role.confirmados %}
+                        <button type="button" class="btn btn-light  btn-sm" data-bs-toggle="popover" data-bs-title="Lista de confirmados" data-bs-content="{{ role.confirmados }}">Confirmados</button>
+                        {% endif %}
+                      </ul>
+                      <div class="card-footer" >
+                        {% set is_confirmed = user_name in role.confirmados %}
+                        <a class="btn btn-light  btn-sm confirm-presence-button" data-role-id="{{ role._id }}"  data-confirmed="{{ 'true' if is_confirmed else 'false' }}">{{ "Desconfirmar Presença" if is_confirmed else "Confirmar Presença" }}</a>
+                        {% if role.criador_name == session['user_name'] %}
+                        <button type="button" class="btn btn-light btn-sm edit-role-button" data-role-id="{{ role._id }}" href="javascript:void(0);" onclick="abrirModalEdicao('{{ role._id }}')">Editar Rolê</button>
+                      {% endif %}
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div> 
+
+    <!-- Conteudo Principal Usuario-->
+    <div class="principal-containt" data-tipo="usuario">
+      <div class="container text-center">
+          <div class="row">
+            {% for usuario in users %}
+              <div class="col">
+                  <div class="card" style="width: 20rem;"data-usuario="{{ usuario.id }}">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ usuario.nome }}</h5>
+                          <p class="card-text">{{ usuario.email }}</p>
+                          <!-- Adicione outros campos conforme necessário -->
+                      </div>
+                      <div class="card-footer">
+                        <a class="btn btn-light  btn-sm follow-button" data-user-id="{{ usuario._id }}"  data-confirmed="{{ 'true' if is_confirmed else 'false' }}">{{ "Deixar de Seguir" if is_confirmed else "Seguir" }}</a>
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div> 
+    <!--editar role-->
+    <div id="editarRoleModal" class="modalrole">
+      <div class="modal-content-role">
+        <span class="closerole" onclick="fecharModal('editarRoleModal')">&times;</span>
+        <h2>Criar um Rolê</h2>
+        <form id="formEditarRole" action="/edit-role">
+          <label for="nome">Nome do Rolê:</label>
+          <input type="text" id="nome" name="nome" required><br><br>
+          <label for="promocao">Promocao:</label>
+          <input type="text" id="promocao" name="promocao"><br><br>
+          <label for="happy_hour">Happy Hour:</label>
+          <input type="text" id="happy_hour" name="happy_hour"><br><br>
+          <label for="tipo_musica">Tipo de música:</label>
+          <input type="text" id="tipo_musica" name="tipo_musica"><br><br>
+          <label for="imagem_url">Adicione uma imagem ao seu Rolê:</label>
+          <input type="file" id="imagem_url" name="imagem_url" accept="image/*"><br><br>
+          <button class="btn btn-light  btn-sm" type="submit">Editar Rolê</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search-input');
+        
+        searchInput.addEventListener('input', function () {
+            const searchText = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+      
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(searchText)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+      });
+    
+    
+      document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+      
+        const filterCards = () => {
+            const searchText = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+      
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(searchText)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        };
+    
+      searchInput.addEventListener('input', filterCards);
+      searchButton.addEventListener('click', function(e) {
+          e.preventDefault(); // Previne o comportamento padrão do botão de submit
+          filterCards();
+        });
+      });
+    </script>
+
+    <script src="static/js/home.js"></script>
+  </body>
+</html>
+
